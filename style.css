@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400');
+
+body {
+	font-family: "Roboto", sans-serif;
+	font-weight: 100;
+}
+
+h1 {
+    text-align: center;
+}
+
+.row {
+    display: table;
+    table-layout: fixed;
+    margin: auto;
+}
+
+.column {
+    display:table-cell;
+}
+
+.cell {
+    border-style: solid;
+    height: 50px;
+    width:50px;
+}
+
+.cell:hover {
+    background-color: grey;
+}
+
+#tttparent {
+    -webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
