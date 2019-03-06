@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,400');
 
 body {
-	font-family: "Roboto", sans-serif;
-	font-weight: 100;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
 }
 
 h1 {
@@ -17,7 +17,7 @@ h1 {
 }
 
 .column {
-    display:table-cell;
+    display: table-cell;
 }
 
 .column1 {
@@ -39,6 +39,8 @@ h1 {
 .cell {
     height: 150px;
     width: 150px;
+    text-align: center;
+    line-height:150px
 }
 
 .cell:hover {
@@ -46,10 +48,11 @@ h1 {
 }
 
 #tttparent {
+    font-size: 4em;
     -webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
