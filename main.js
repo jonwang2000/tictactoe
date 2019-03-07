@@ -8,11 +8,16 @@ var sevenCell = document.getElementById('cell7');
 var eightCell = document.getElementById('cell8');
 var nineCell = document.getElementById('cell9');
 
+var allCells = [oneCell, twoCell, threeCell, fourCell, fiveCell, sixCell, sevenCell, eightCell, nineCell];
+
+var resetBtn = document.getElementById('resetBtn');
+
 var cellBtns = document.getElementsByClassName('cell');
 
 var turn = 1;
 
-var updateDisplay = (clickObj) => {
+// updateCell changes the state of a cell if it's empty; otherwise doesn't
+var updateCell = (clickObj) => {
 
     if ((turn % 2) == 1) {
         clickObj.target.innerText = 'x';
@@ -26,5 +31,12 @@ var updateDisplay = (clickObj) => {
 }
 
 for (let i = 0; i < cellBtns.length; i++) {
-    cellBtns[i].addEventListener('click', updateDisplay, false);
+    cellBtns[i].addEventListener('click', updateCell, false);
+}
+
+// resetBtn.onclick is an anonymous function that sets all cells back to empty
+resetBtn.onclick = () => {
+    for (i = 0; i < allCells.length; i++) {
+        allCells[i].innerText = '';
+    }
 }
