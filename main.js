@@ -19,17 +19,21 @@ var turn = 1;
 // updateCell changes the state of a cell if it's empty; otherwise doesn't
 var updateCell = (clickObj) => {
 
-    if ((turn % 2) == 1) {
-        clickObj.target.innerText = 'x';
-        ++turn;
-    } else {
-        clickObj.target.innerText = 'o';
-        ++turn;
+    if (clickObj.target.innerText == '') {
+
+        if ((turn % 2) == 1) {
+            clickObj.target.innerText = 'x';
+            ++turn;
+        } else {
+            clickObj.target.innerText = 'o';
+            ++turn;
+        }
     }
 
     console.log(clickObj.target.innerText);
 }
 
+// Adding event listeners for cells
 for (let i = 0; i < cellBtns.length; i++) {
     cellBtns[i].addEventListener('click', updateCell, false);
 }
@@ -39,4 +43,6 @@ resetBtn.onclick = () => {
     for (i = 0; i < allCells.length; i++) {
         allCells[i].innerText = '';
     }
+
+    turn = 1; // Restting turn counter
 }

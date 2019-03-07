@@ -23,9 +23,15 @@ h1 {
     margin: 0 auto;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
     font-size: 4em;
-    text-align:center;
-    line-height:147px;
+    text-align: center;
+    line-height: 147px;
     font-weight: bold;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .cell {
@@ -36,4 +42,5 @@ h1 {
     display: block;
     margin: auto;
     margin-top: 30px;
+    padding: 5px;
 }
