@@ -40,7 +40,17 @@ h1 {
 
 #resetBtn {
     display: block;
+    padding: 5px;
     margin: auto;
     margin-top: 30px;
-    padding: 5px;
+}
+
+.container {
+    margin: auto;
+    text-align: center;
+}
+
+#winnerText {
+    margin-top: 30px;
+    font-size: 3em;
 }
