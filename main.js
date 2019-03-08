@@ -10,6 +10,7 @@ Deals with tic tac toe JS app
 
 
 // DOM variable initialization
+// ============================================================================================
 var oneCell = document.getElementById('cell1');
 var twoCell = document.getElementById('cell2');
 var threeCell = document.getElementById('cell3');
@@ -32,6 +33,7 @@ var allCells = [oneCell, twoCell, threeCell, fourCell, fiveCell, sixCell, sevenC
 
 
 // Global Variables
+// ============================================================================================
 var turn = 1;
 var playableBool = true;
 var counter = 0;
@@ -39,6 +41,11 @@ var counter = 0;
 // For reference, these arrays are ordered c1, c2, c3, r1, r2, r3, d1, d2 where c's are columns, r's are rows, d's diagonal
 var xCellCount = [0, 0, 0, 0, 0, 0, 0, 0],
     oCellCount = [0, 0, 0, 0, 0, 0, 0, 0];
+
+
+
+// Functions
+// ============================================================================================
 
 // updateCell changes the state of a cell if it's empty; otherwise doesn't
 var updateCell = (clickObj) => {
@@ -82,7 +89,8 @@ resetBtn.onclick = () => {
         allCells[i].innerText = '';
     }
 
-    turn = 1; // Restting turn counter
+    // Resets all globals
+    turn = 1;
     playableBool = true;
 
     xCellCount = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -93,9 +101,12 @@ resetBtn.onclick = () => {
     counter = 0;
 }
 
+
+// updateCellCount(cellCount, cellNo) updates cellCount array, adding to c1 ... d2
+// This is so that when one of those values is 3, the game is won
 function updateCellCount(cellCount, cellNo) {
 
-    console.log(cellNo);
+    //console.log(cellNo);
 
     switch (cellNo) {
         case 'cell1':
@@ -146,14 +157,22 @@ function updateCellCount(cellCount, cellNo) {
     }
 }
 
+// checkWin() does what it says
 function checkWin() {
     if (xCellCount.includes(3)) {
-        console.log("X wins!");
+        //console.log("X wins!");
         playableBool = false;
         winDiv.innerText = "X wins!";
     } else if (oCellCount.includes(3)) {
-        console.log("O wins!");
+        //console.log("O wins!");
         playableBool = false;
         winDiv.innerText = "O wins!";
     }
 }
+
+/* Notes:
+
+- Basic game functionality works, but very unsatisfied with code, clean up later
+- I have no idea how I'm gonna implement the CPU even playing lmao
+
+*/
