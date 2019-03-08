@@ -38,11 +38,15 @@ h1 {
     border: 1px solid black;
 }
 
-#resetBtn {
-    display: block;
+.btn {
+    display: inline;
     padding: 5px;
+    margin: 5px;
+}
+
+#buttons {
     margin: auto;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 .container {

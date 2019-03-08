@@ -21,10 +21,14 @@ var sevenCell = document.getElementById('cell7');
 var eightCell = document.getElementById('cell8');
 var nineCell = document.getElementById('cell9');
 
-var resetBtn = document.getElementById('resetBtn');
-
 var cellBtns = document.getElementsByClassName('cell');
 
+// Buttons:
+var resetBtn = document.getElementById('resetBtn');
+var playBtn = document.getElementById('humanPlayBtn');
+
+
+// Winner Text
 var winDiv = document.getElementById('winnerText');
 
 
@@ -35,8 +39,9 @@ var allCells = [oneCell, twoCell, threeCell, fourCell, fiveCell, sixCell, sevenC
 // Global Variables
 // ============================================================================================
 var turn = 1;
-var playableBool = true;
+var playableBool = false;
 var counter = 0;
+var resetBool = false;
 
 // For reference, these arrays are ordered c1, c2, c3, r1, r2, r3, d1, d2 where c's are columns, r's are rows, d's diagonal
 var xCellCount = [0, 0, 0, 0, 0, 0, 0, 0],
@@ -91,7 +96,9 @@ resetBtn.onclick = () => {
 
     // Resets all globals
     turn = 1;
-    playableBool = true;
+    playableBool = false;
+
+    resetBool = true;
 
     xCellCount = [0, 0, 0, 0, 0, 0, 0, 0];
     oCellCount = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -100,6 +107,14 @@ resetBtn.onclick = () => {
 
     counter = 0;
 }
+
+playBtn.onclick = () => {
+    if (resetBool == true){
+        playableBool = true;
+        resetBool = false;
+    }
+}
+
 
 
 // updateCellCount(cellCount, cellNo) updates cellCount array, adding to c1 ... d2
