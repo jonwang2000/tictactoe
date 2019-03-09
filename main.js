@@ -34,7 +34,7 @@ var playerBtn = document.getElementById('playerStartBtn');
 
 
 // Winner Text
-var winDiv = document.getElementById('winnerText');
+var outText = document.getElementById('outputText');
 
 
 // Array containing all cells
@@ -76,7 +76,7 @@ function updateCell(cell) {
 
         if (counter == 9) {
             playableBool == false;
-            winDiv.innerText = "Draw!"
+            outText.innerText = "Draw!"
         }
 
         checkWin();
@@ -88,99 +88,40 @@ function updateCell(cell) {
 
 }
 
-// Used to get random integer, helper for random CPU placeholder
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// Previously used for random CPU turn
 
-// Picks a random integer from 0-8 based on if that cell is empty or not
-function getValidCell() {
-    var valid = false;
-    var output = 0;
+// function getRandomInt(min, max) {
+//     min = Math.ceil(min);
+//     max = Math.floor(max);
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
 
-    while (valid == false) {
-        output = getRandomInt(0, 8);
+// function getValidCell() {
+//     var valid = false;
+//     var output = 0;
 
-        if (boardArray[output] != 'x' && boardArray[output] != 'o') {
-            break;
-        }
-    }
+//     while (valid == false) {
+//         output = getRandomInt(0, 8);
 
-    return output;
-}
+//         if (boardArray[output] != 'x' && boardArray[output] != 'o') {
+//             break;
+//         }
+//     }
+
+//     return output;
+// }
 
 // CPU makes a move, .5 second delay
 function cpuTurn() {
     clickableBool = false;
 
     setTimeout(function () {
-        updateCell(allCells[minimax(boardArray, cpuVar).index]);
+        outText.innerText = "Go.";
         clickableBool = true;
-    }, 500);
+        updateCell(allCells[minimax(boardArray, cpuVar).index]);
+    }, 300);
 
 }
-
-// Minimax algorithm for CPU to never lose
-function minimax(newBoard, player) {
-
-    var availSpots = emptyCells(boardArray);
-
-    if (winCondition(newBoard, playerVar)) {
-        return {
-            score: -10
-        };
-    } else if (winCondition(newBoard, cpuVar)) {
-        return {
-            score: 10
-        };
-    } else if (availSpots.length === 0) {
-        return {
-            score: 0
-        };
-    }
-    var moves = [];
-    for (var i = 0; i < availSpots.length; i++) {
-        var move = {};
-        move.index = newBoard[availSpots[i]];
-        newBoard[availSpots[i]] = player;
-
-        if (player == cpuVar) {
-            var result = minimax(newBoard, playerVar);
-            move.score = result.score;
-        } else {
-            var result = minimax(newBoard, cpuVar);
-            move.score = result.score;
-        }
-
-        newBoard[availSpots[i]] = move.index;
-
-        moves.push(move);
-    }
-
-    var bestMove;
-    if (player === cpuVar) {
-        var bestScore = -10000;
-        for (var i = 0; i < moves.length; i++) {
-            if (moves[i].score > bestScore) {
-                bestScore = moves[i].score;
-                bestMove = i;
-            }
-        }
-    } else {
-        var bestScore = 10000;
-        for (var i = 0; i < moves.length; i++) {
-            if (moves[i].score < bestScore) {
-                bestScore = moves[i].score;
-                bestMove = i;
-            }
-        }
-    }
-
-    return moves[bestMove];
-}
-
 
 // Called by event listener for click, has CPU do move afterwards
 // CPU will not do move if counter is 9, preventing infinite while loop
@@ -189,6 +130,7 @@ var clickCell = (clickObj) => {
     var x = false;
 
     if (clickableBool == true) {
+        outText.innerHTML = "Hm.";
         x = updateCell(clickObj.target);
     }
 
@@ -216,7 +158,7 @@ function resetBoard() {
 
     boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
-    winDiv.innerText = '';
+    outText.innerText = '';
 
     counter = 0;
 }
@@ -282,11 +224,21 @@ function checkWin() {
     if (winCondition(boardArray, 'x')) {
         //console.log("X wins!");
         playableBool = false;
-        winDiv.innerText = "X wins!";
+        clickableBool = false;
+        if (cpuVar == 'x') {
+            outText.innerText = "I win.";
+        } else if (playerVar == 'x') {
+            outText.innerText = "That's impossible.";
+        }
     } else if (winCondition(boardArray, 'o')) {
         //console.log("O wins!");
         playableBool = false;
-        winDiv.innerText = "O wins!";
+        clickableBool = false;
+        if (cpuVar == 'o') {
+            outText.innerText = "I win.";
+        } else if (playerVar == 'o') {
+            outText.innerText = "That's impossible.";
+        }
     }
 }
 
@@ -307,6 +259,65 @@ function winCondition(arr, player) {
     } else {
         return false;
     }
+}
+
+// Minimax algorithm for CPU to never lose
+function minimax(newBoard, player) {
+
+    var availSpots = emptyCells(boardArray);
+
+    if (winCondition(newBoard, playerVar)) {
+        return {
+            score: -10
+        };
+    } else if (winCondition(newBoard, cpuVar)) {
+        return {
+            score: 10
+        };
+    } else if (availSpots.length === 0) {
+        return {
+            score: 0
+        };
+    }
+    var moves = [];
+    for (var i = 0; i < availSpots.length; i++) {
+        var move = {};
+        move.index = newBoard[availSpots[i]];
+        newBoard[availSpots[i]] = player;
+
+        if (player == cpuVar) {
+            var result = minimax(newBoard, playerVar);
+            move.score = result.score;
+        } else {
+            var result = minimax(newBoard, cpuVar);
+            move.score = result.score;
+        }
+
+        newBoard[availSpots[i]] = move.index;
+
+        moves.push(move);
+    }
+
+    var bestMove;
+    if (player === cpuVar) {
+        var bestScore = -10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+
+    return moves[bestMove];
 }
 
 
