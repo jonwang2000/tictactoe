@@ -48,9 +48,10 @@ var playableBool = true;
 var counter = 0;
 var clickableBool = false;
 
-var boardArray = Array(9).fill("");
+var boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
-
+var playerVar = 'x';
+var cpuVar = 'o';
 
 // Functions
 // ============================================================================================
@@ -100,9 +101,9 @@ function getValidCell() {
     var output = 0;
 
     while (valid == false) {
-        output = getRandomInt(0, 9);
+        output = getRandomInt(0, 8);
 
-        if (boardArray[output] == "") {
+        if (boardArray[output] != 'x' && boardArray[output] != 'o') {
             break;
         }
     }
@@ -115,11 +116,71 @@ function cpuTurn() {
     clickableBool = false;
 
     setTimeout(function () {
-        updateCell(allCells[getValidCell()]);
+        updateCell(allCells[minimax(boardArray, cpuVar).index]);
         clickableBool = true;
     }, 500);
 
 }
+
+// Minimax algorithm for CPU to never lose
+function minimax(newBoard, player) {
+
+    var availSpots = emptyCells(boardArray);
+
+    if (winCondition(newBoard, playerVar)) {
+        return {
+            score: -10
+        };
+    } else if (winCondition(newBoard, cpuVar)) {
+        return {
+            score: 10
+        };
+    } else if (availSpots.length === 0) {
+        return {
+            score: 0
+        };
+    }
+    var moves = [];
+    for (var i = 0; i < availSpots.length; i++) {
+        var move = {};
+        move.index = newBoard[availSpots[i]];
+        newBoard[availSpots[i]] = player;
+
+        if (player == cpuVar) {
+            var result = minimax(newBoard, playerVar);
+            move.score = result.score;
+        } else {
+            var result = minimax(newBoard, cpuVar);
+            move.score = result.score;
+        }
+
+        newBoard[availSpots[i]] = move.index;
+
+        moves.push(move);
+    }
+
+    var bestMove;
+    if (player === cpuVar) {
+        var bestScore = -10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score > bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    } else {
+        var bestScore = 10000;
+        for (var i = 0; i < moves.length; i++) {
+            if (moves[i].score < bestScore) {
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+
+    return moves[bestMove];
+}
+
 
 // Called by event listener for click, has CPU do move afterwards
 // CPU will not do move if counter is 9, preventing infinite while loop
@@ -155,7 +216,7 @@ resetBtn.onclick = () => {
     playableBool = false;
     clickableBool = false;
 
-    boardArray = Array(9).fill("");
+    boardArray = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
     winDiv.innerText = '';
 
@@ -163,11 +224,15 @@ resetBtn.onclick = () => {
 }
 
 cpuBtn.onclick = () => {
+    cpuVar = 'x';
+    playerVar = 'o';
     cpuTurn();
     playableBool = true;
 }
 
 playerBtn.onclick = () => {
+    cpuVar = 'o';
+    playerVar = 'x';
     clickableBool = true;
     playableBool = true;
 }
@@ -223,6 +288,10 @@ function checkWin() {
         playableBool = false;
         winDiv.innerText = "O wins!";
     }
+}
+
+function emptyCells(arr) {
+    return arr.filter(x => x != 'x' && x != 'o');
 }
 
 function winCondition(arr, player) {
