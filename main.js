@@ -204,9 +204,7 @@ for (let i = 0; i < cellBtns.length; i++) {
     cellBtns[i].addEventListener('click', clickCell, false);
 }
 
-
-// resetBtn.onclick is an anonymous function that sets all cells back to empty
-resetBtn.onclick = () => {
+function resetBoard() {
     for (i = 0; i < allCells.length; i++) {
         allCells[i].innerText = '';
     }
@@ -224,6 +222,7 @@ resetBtn.onclick = () => {
 }
 
 cpuBtn.onclick = () => {
+    resetBoard();
     cpuVar = 'x';
     playerVar = 'o';
     cpuTurn();
@@ -231,6 +230,7 @@ cpuBtn.onclick = () => {
 }
 
 playerBtn.onclick = () => {
+    resetBoard();
     cpuVar = 'o';
     playerVar = 'x';
     clickableBool = true;
