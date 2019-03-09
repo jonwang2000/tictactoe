@@ -111,8 +111,11 @@ function getValidCell() {
 
 
 function cpuTurn() {
-    setTimeout(function() {
+    clickableBool = false;
+
+    setTimeout(function () {
         updateCell(allCells[getValidCell()]);
+        clickableBool = true;
     }, 500);
 
 }
@@ -120,7 +123,11 @@ function cpuTurn() {
 
 var clickCell = (clickObj) => {
 
-    var x = updateCell(clickObj.target)
+    var x = false;
+
+    if (clickableBool == true) {
+        x = updateCell(clickObj.target);
+    }
 
     if (x == true && counter != 9) {
         cpuTurn();
