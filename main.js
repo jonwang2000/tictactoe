@@ -6,6 +6,10 @@ Written by: Jonathan Wang
 
 Deals with tic tac toe JS app
 
+NOTES
+- reset is currently a hard reset
+- poor data structure design atm, redesign later
+
 */
 
 
@@ -55,8 +59,8 @@ var activeCells = Array(9).fill(false);
 // Functions
 // ============================================================================================
 
-// clickCell changes the state of a cell if it's empty; otherwise doesn't
-
+// Some changes to previous code: updateCell now takes in a cell (as in cell1) and mutates it
+// Will return true or false based on if an update went through
 function updateCell(cell) {
 
     if (cell.innerText == '' && playableBool == true) {
@@ -87,13 +91,14 @@ function updateCell(cell) {
 
 }
 
+// Used to get random integer, helper for random CPU placeholder
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
+// Picks a random integer from 0-8 based on if that cell is empty or not
 function getValidCell() {
     var valid = false;
     var output = 0;
@@ -109,7 +114,7 @@ function getValidCell() {
     return output;
 }
 
-
+// CPU makes a move, .5 second delay
 function cpuTurn() {
     clickableBool = false;
 
@@ -120,7 +125,8 @@ function cpuTurn() {
 
 }
 
-
+// Called by event listener for click, has CPU do move afterwards
+// CPU will not do move if counter is 9, preventing infinite while loop
 var clickCell = (clickObj) => {
 
     var x = false;
@@ -129,7 +135,7 @@ var clickCell = (clickObj) => {
         x = updateCell(clickObj.target);
     }
 
-    if (x == true && counter != 9) {
+    if (x == true && counter < 9) {
         cpuTurn();
     }
 
@@ -150,7 +156,8 @@ resetBtn.onclick = () => {
 
     // Resets all globals
     turn = 1;
-    playableBool = true;
+    playableBool = false;
+    clickableBool = false;
 
     xCellCount = Array(8).fill(0);
     oCellCount = Array(8).fill(0);
@@ -263,5 +270,3 @@ function checkArrs() {
 - I have no idea how I'm gonna implement the CPU even playing lmao
 
 */
-
-var breakout = true;
