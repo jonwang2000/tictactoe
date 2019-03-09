@@ -45,7 +45,7 @@ var counter = 0;
 
 // For reference, these arrays are ordered c1, c2, c3, r1, r2, r3, d1, d2 where c's are columns, r's are rows, d's diagonal
 var xCellCount = Array(8).fill(0);
-    oCellCount = Array(8).fill(0);
+oCellCount = Array(8).fill(0);
 
 var activeCells = Array(9).fill(false);
 
@@ -54,41 +54,78 @@ var activeCells = Array(9).fill(false);
 // Functions
 // ============================================================================================
 
-// updateCell changes the state of a cell if it's empty; otherwise doesn't
-var updateCell = (clickObj) => {
+// clickCell changes the state of a cell if it's empty; otherwise doesn't
 
-    //console.log(clickObj.target.id);
+function updateCell(cell) {
 
-    if (clickObj.target.innerText == '' && playableBool == true) {
-
-        console.log(clickObj.target.id)
+    if (cell.innerText == '' && playableBool == true) {
 
         if ((turn % 2) == 1) {
-            clickObj.target.innerText = 'x';
-            updateCellCount(xCellCount, clickObj.target.id);
+            cell.innerText = 'x';
+            updateCellCount(xCellCount, cell.id);
             ++turn;
         } else {
-            clickObj.target.innerText = 'o';
-            updateCellCount(oCellCount, clickObj.target.id);
+            cell.innerText = 'o';
+            updateCellCount(oCellCount, cell.id);
             ++turn;
         }
 
         ++counter;
+
+        if (counter == 9) {
+            playableBool == false;
+            winDiv.innerText = "Draw!"
+        }
+
+        checkWin();
+
+        return true;
+    } else {
+        return false;
     }
 
-    if (counter == 9) {
-        winDiv.innerText = "Draw!"
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function getValidCell() {
+    var valid = false;
+    var output = 0;
+
+    while (valid == false) {
+        output = getRandomInt(0, 9);
+
+        if (activeCells[output] == false) {
+            break;
+        }
     }
 
-    checkWin();
+    return output;
+}
 
-    //console.log(clickObj.target.innerText);
+
+function cpuTurn(x) {
+    updateCell(allCells[getValidCell()]);
+
+}
+
+
+var clickCell = (clickObj) => {
+
+    if (updateCell(clickObj.target) == true && counter != 9) {
+        cpuTurn();
+    }
 }
 
 
 // Adding event listeners for cells
 for (let i = 0; i < cellBtns.length; i++) {
-    cellBtns[i].addEventListener('click', updateCell, false);
+    cellBtns[i].addEventListener('click', clickCell, false);
 }
 
 
@@ -191,6 +228,9 @@ function checkWin() {
     }
 }
 
+
+
+
 // Function for testing purposes in console
 function checkArrs() {
     console.log(xCellCount);
@@ -204,3 +244,5 @@ function checkArrs() {
 - I have no idea how I'm gonna implement the CPU even playing lmao
 
 */
+
+var breakout = true;
