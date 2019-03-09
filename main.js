@@ -49,8 +49,8 @@ var counter = 0;
 var clickableBool = false;
 
 // For reference, these arrays are ordered c1, c2, c3, r1, r2, r3, d1, d2 where c's are columns, r's are rows, d's diagonal
-var xCellCount = Array(8).fill(0);
-oCellCount = Array(8).fill(0);
+var xCellCount = Array(9).fill(false);
+oCellCount = Array(9).fill(false);
 
 var activeCells = Array(9).fill(false);
 
@@ -159,8 +159,8 @@ resetBtn.onclick = () => {
     playableBool = false;
     clickableBool = false;
 
-    xCellCount = Array(8).fill(0);
-    oCellCount = Array(8).fill(0);
+    xCellCount = Array(9).fill(false);
+    oCellCount = Array(9).fill(false);
 
     activeCells = Array(9).fill(false);
 
@@ -171,10 +171,12 @@ resetBtn.onclick = () => {
 
 cpuBtn.onclick = () => {
     cpuTurn();
+    playableBool = true;
 }
 
 playerBtn.onclick = () => {
     clickableBool = true;
+    playableBool = true;
 }
 
 // updateCellCount(cellCount, cellNo) updates cellCount array, adding to c1 ... d2
@@ -185,54 +187,39 @@ function updateCellCount(cellCount, cellNo) {
 
     switch (cellNo) {
         case 'cell1':
-            ++cellCount[0];
-            ++cellCount[3];
-            ++cellCount[6];
+            cellCount[0] = true;
             activeCells[0] = true;
             break;
         case 'cell2':
-            ++cellCount[1];
-            ++cellCount[3];
+            cellCount[1] = true;
             activeCells[1] = true;
             break;
         case 'cell3':
-            ++cellCount[2];
-            ++cellCount[3];
-            ++cellCount[7];
+            cellCount[2] = true;
             activeCells[2] = true;
             break;
         case 'cell4':
-            ++cellCount[0];
-            ++cellCount[4];
+            cellCount[3] = true;
             activeCells[3] = true;
             break;
         case 'cell5':
-            ++cellCount[1];
-            ++cellCount[4];
-            ++cellCount[6];
-            ++cellCount[7];
+            cellCount[4] = true;
             activeCells[4] = true;
             break;
         case 'cell6':
-            ++cellCount[2];
-            ++cellCount[4];
+            cellCount[5] = true;
             activeCells[5] = true;
             break;
         case 'cell7':
-            ++cellCount[7];
-            ++cellCount[0];
-            ++cellCount[5];
+            cellCount[6] = true;
             activeCells[6] = true;
             break;
         case 'cell8':
-            ++cellCount[1];
-            ++cellCount[5];
+            cellCount[7] = true;
             activeCells[7] = true;
             break;
         case 'cell9':
-            ++cellCount[6];
-            ++cellCount[2];
-            ++cellCount[5];
+            cellCount[8] = true;
             activeCells[8] = true;
             break;
         default:
@@ -243,17 +230,31 @@ function updateCellCount(cellCount, cellNo) {
 
 // checkWin() does what it says
 function checkWin() {
-    if (xCellCount.includes(3)) {
+    if (winCondition(xCellCount)) {
         //console.log("X wins!");
         playableBool = false;
         winDiv.innerText = "X wins!";
-    } else if (oCellCount.includes(3)) {
+    } else if (winCondition(oCellCount)) {
         //console.log("O wins!");
         playableBool = false;
         winDiv.innerText = "O wins!";
     }
 }
 
+function winCondition(arr) {
+    if ((arr[0] && arr[1] && arr[2]) ||
+        (arr[3] && arr[4] && arr[5]) ||
+        (arr[6] && arr[7] && arr[8]) ||
+        (arr[0] && arr[3] && arr[6]) ||
+        (arr[1] && arr[4] && arr[7]) ||
+        (arr[2] && arr[5] && arr[8]) ||
+        (arr[0] && arr[4] && arr[8]) ||
+        (arr[2] && arr[4] && arr[6])) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 
