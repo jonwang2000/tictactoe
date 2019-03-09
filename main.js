@@ -42,7 +42,7 @@ var allCells = [oneCell, twoCell, threeCell, fourCell, fiveCell, sixCell, sevenC
 var turn = 1;
 var playableBool = true;
 var counter = 0;
-var clickableBool = true;
+var clickableBool = false;
 
 // For reference, these arrays are ordered c1, c2, c3, r1, r2, r3, d1, d2 where c's are columns, r's are rows, d's diagonal
 var xCellCount = Array(8).fill(0);
@@ -162,7 +162,13 @@ resetBtn.onclick = () => {
     counter = 0;
 }
 
+cpuBtn.onclick = () => {
+    cpuTurn();
+}
 
+playerBtn.onclick = () => {
+    clickableBool = true;
+}
 
 // updateCellCount(cellCount, cellNo) updates cellCount array, adding to c1 ... d2
 // This is so that when one of those values is 3, the game is won
