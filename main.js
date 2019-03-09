@@ -42,6 +42,7 @@ var allCells = [oneCell, twoCell, threeCell, fourCell, fiveCell, sixCell, sevenC
 var turn = 1;
 var playableBool = true;
 var counter = 0;
+var clickableBool = true;
 
 // For reference, these arrays are ordered c1, c2, c3, r1, r2, r3, d1, d2 where c's are columns, r's are rows, d's diagonal
 var xCellCount = Array(8).fill(0);
@@ -109,17 +110,22 @@ function getValidCell() {
 }
 
 
-function cpuTurn(x) {
-    updateCell(allCells[getValidCell()]);
+function cpuTurn() {
+    setTimeout(function() {
+        updateCell(allCells[getValidCell()]);
+    }, 500);
 
 }
 
 
 var clickCell = (clickObj) => {
 
-    if (updateCell(clickObj.target) == true && counter != 9) {
+    var x = updateCell(clickObj.target)
+
+    if (x == true && counter != 9) {
         cpuTurn();
     }
+
 }
 
 
