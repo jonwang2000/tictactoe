@@ -25,7 +25,8 @@ var cellBtns = document.getElementsByClassName('cell');
 
 // Buttons:
 var resetBtn = document.getElementById('resetBtn');
-var playBtn = document.getElementById('humanPlayBtn');
+var cpuBtn = document.getElementById('cpuStartBtn');
+var playerBtn = document.getElementById('playerStartBtn');
 
 
 // Winner Text
@@ -39,13 +40,14 @@ var allCells = [oneCell, twoCell, threeCell, fourCell, fiveCell, sixCell, sevenC
 // Global Variables
 // ============================================================================================
 var turn = 1;
-var playableBool = false;
+var playableBool = true;
 var counter = 0;
-var resetBool = false;
 
 // For reference, these arrays are ordered c1, c2, c3, r1, r2, r3, d1, d2 where c's are columns, r's are rows, d's diagonal
-var xCellCount = [0, 0, 0, 0, 0, 0, 0, 0],
-    oCellCount = [0, 0, 0, 0, 0, 0, 0, 0];
+var xCellCount = Array(8).fill(0);
+    oCellCount = Array(8).fill(0);
+
+var activeCells = Array(9).fill(false);
 
 
 
@@ -58,6 +60,8 @@ var updateCell = (clickObj) => {
     //console.log(clickObj.target.id);
 
     if (clickObj.target.innerText == '' && playableBool == true) {
+
+        console.log(clickObj.target.id)
 
         if ((turn % 2) == 1) {
             clickObj.target.innerText = 'x';
@@ -96,23 +100,16 @@ resetBtn.onclick = () => {
 
     // Resets all globals
     turn = 1;
-    playableBool = false;
+    playableBool = true;
 
-    resetBool = true;
+    xCellCount = Array(8).fill(0);
+    oCellCount = Array(8).fill(0);
 
-    xCellCount = [0, 0, 0, 0, 0, 0, 0, 0];
-    oCellCount = [0, 0, 0, 0, 0, 0, 0, 0];
+    activeCells = Array(9).fill(false);
 
     winDiv.innerText = '';
 
     counter = 0;
-}
-
-playBtn.onclick = () => {
-    if (resetBool == true){
-        playableBool = true;
-        resetBool = false;
-    }
 }
 
 
@@ -128,43 +125,52 @@ function updateCellCount(cellCount, cellNo) {
             ++cellCount[0];
             ++cellCount[3];
             ++cellCount[6];
+            activeCells[0] = true;
             break;
         case 'cell2':
             ++cellCount[1];
             ++cellCount[3];
+            activeCells[1] = true;
             break;
         case 'cell3':
             ++cellCount[2];
             ++cellCount[3];
             ++cellCount[7];
+            activeCells[2] = true;
             break;
         case 'cell4':
             ++cellCount[0];
             ++cellCount[4];
+            activeCells[3] = true;
             break;
         case 'cell5':
             ++cellCount[1];
             ++cellCount[4];
             ++cellCount[6];
             ++cellCount[7];
+            activeCells[4] = true;
             break;
         case 'cell6':
             ++cellCount[2];
             ++cellCount[4];
+            activeCells[5] = true;
             break;
         case 'cell7':
             ++cellCount[7];
             ++cellCount[0];
             ++cellCount[5];
+            activeCells[6] = true;
             break;
         case 'cell8':
             ++cellCount[1];
             ++cellCount[5];
+            activeCells[7] = true;
             break;
         case 'cell9':
             ++cellCount[6];
             ++cellCount[2];
             ++cellCount[5];
+            activeCells[8] = true;
             break;
         default:
             console.log("How on earth did you get here?");
@@ -183,6 +189,13 @@ function checkWin() {
         playableBool = false;
         winDiv.innerText = "O wins!";
     }
+}
+
+// Function for testing purposes in console
+function checkArrs() {
+    console.log(xCellCount);
+    console.log(oCellCount);
+    console.log(activeCells);
 }
 
 /* Notes:
