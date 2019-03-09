@@ -48,11 +48,7 @@ var playableBool = true;
 var counter = 0;
 var clickableBool = false;
 
-// For reference, these arrays are ordered c1, c2, c3, r1, r2, r3, d1, d2 where c's are columns, r's are rows, d's diagonal
-var xCellCount = Array(9).fill(false);
-oCellCount = Array(9).fill(false);
-
-var activeCells = Array(9).fill(false);
+var boardArray = Array(9).fill("");
 
 
 
@@ -67,11 +63,11 @@ function updateCell(cell) {
 
         if ((turn % 2) == 1) {
             cell.innerText = 'x';
-            updateCellCount(xCellCount, cell.id);
+            updateCellCount(boardArray, cell.id, 'x');
             ++turn;
         } else {
             cell.innerText = 'o';
-            updateCellCount(oCellCount, cell.id);
+            updateCellCount(boardArray, cell.id, 'o');
             ++turn;
         }
 
@@ -106,7 +102,7 @@ function getValidCell() {
     while (valid == false) {
         output = getRandomInt(0, 9);
 
-        if (activeCells[output] == false) {
+        if (boardArray[output] == "") {
             break;
         }
     }
@@ -159,10 +155,7 @@ resetBtn.onclick = () => {
     playableBool = false;
     clickableBool = false;
 
-    xCellCount = Array(9).fill(false);
-    oCellCount = Array(9).fill(false);
-
-    activeCells = Array(9).fill(false);
+    boardArray = Array(9).fill("");
 
     winDiv.innerText = '';
 
@@ -181,46 +174,37 @@ playerBtn.onclick = () => {
 
 // updateCellCount(cellCount, cellNo) updates cellCount array, adding to c1 ... d2
 // This is so that when one of those values is 3, the game is won
-function updateCellCount(cellCount, cellNo) {
+function updateCellCount(cellCount, cellNo, player) {
 
     //console.log(cellNo);
 
     switch (cellNo) {
         case 'cell1':
-            cellCount[0] = true;
-            activeCells[0] = true;
+            cellCount[0] = player;
             break;
         case 'cell2':
-            cellCount[1] = true;
-            activeCells[1] = true;
+            cellCount[1] = player;
             break;
         case 'cell3':
-            cellCount[2] = true;
-            activeCells[2] = true;
+            cellCount[2] = player;
             break;
         case 'cell4':
-            cellCount[3] = true;
-            activeCells[3] = true;
+            cellCount[3] = player;
             break;
         case 'cell5':
-            cellCount[4] = true;
-            activeCells[4] = true;
+            cellCount[4] = player;
             break;
         case 'cell6':
-            cellCount[5] = true;
-            activeCells[5] = true;
+            cellCount[5] = player;
             break;
         case 'cell7':
-            cellCount[6] = true;
-            activeCells[6] = true;
+            cellCount[6] = player;
             break;
         case 'cell8':
-            cellCount[7] = true;
-            activeCells[7] = true;
+            cellCount[7] = player;
             break;
         case 'cell9':
-            cellCount[8] = true;
-            activeCells[8] = true;
+            cellCount[8] = player;
             break;
         default:
             console.log("How on earth did you get here?");
@@ -230,40 +214,32 @@ function updateCellCount(cellCount, cellNo) {
 
 // checkWin() does what it says
 function checkWin() {
-    if (winCondition(xCellCount)) {
+    if (winCondition(boardArray, 'x')) {
         //console.log("X wins!");
         playableBool = false;
         winDiv.innerText = "X wins!";
-    } else if (winCondition(oCellCount)) {
+    } else if (winCondition(boardArray, 'o')) {
         //console.log("O wins!");
         playableBool = false;
         winDiv.innerText = "O wins!";
     }
 }
 
-function winCondition(arr) {
-    if ((arr[0] && arr[1] && arr[2]) ||
-        (arr[3] && arr[4] && arr[5]) ||
-        (arr[6] && arr[7] && arr[8]) ||
-        (arr[0] && arr[3] && arr[6]) ||
-        (arr[1] && arr[4] && arr[7]) ||
-        (arr[2] && arr[5] && arr[8]) ||
-        (arr[0] && arr[4] && arr[8]) ||
-        (arr[2] && arr[4] && arr[6])) {
+function winCondition(arr, player) {
+    if ((arr[0] == player && arr[1] == player && arr[2] == player) ||
+        (arr[3] == player && arr[4] == player && arr[5] == player) ||
+        (arr[6] == player && arr[7] == player && arr[8] == player) ||
+        (arr[0] == player && arr[3] == player && arr[6] == player) ||
+        (arr[1] == player && arr[4] == player && arr[7] == player) ||
+        (arr[2] == player && arr[5] == player && arr[8] == player) ||
+        (arr[0] == player && arr[4] == player && arr[8] == player) ||
+        (arr[2] == player && arr[4] == player && arr[6] == player)) {
         return true;
     } else {
         return false;
     }
 }
 
-
-
-// Function for testing purposes in console
-function checkArrs() {
-    console.log(xCellCount);
-    console.log(oCellCount);
-    console.log(activeCells);
-}
 
 /* Notes:
 
