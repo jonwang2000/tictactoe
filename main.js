@@ -60,14 +60,16 @@ var cpuVar = 'o';
 // Will return true or false based on if an update went through
 function updateCell(cell) {
 
-    if (cell.innerText == '' && playableBool == true) {
+    if (cell.innerText   == '' && playableBool == true) {
 
         if ((turn % 2) == 1) {
-            cell.innerText = 'x';
+            cell.innerHTML = '<i class="fas fa-times"></i>';
+            cell.style.color = '#85e0e0';
             updateCellCount(boardArray, cell.id, 'x');
             ++turn;
         } else {
-            cell.innerText = 'o';
+            cell.innerHTML = '<i class="far fa-circle"></i>';
+            cell.style.color = '#b3ff66';
             updateCellCount(boardArray, cell.id, 'o');
             ++turn;
         }

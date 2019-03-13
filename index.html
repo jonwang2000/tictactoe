@@ -8,38 +8,43 @@
     <title>Tic Tac Toe</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+
 </head>
 
 <body>
 
-    <h1>Tic Tac Toe</h1>
+    <div class="wrapper">
+        <div class="inner">
+            <h1>Tic Tac Toe</h1>
 
-    <div id="tttparent">
+            <div id="tttparent">
 
-        <div class="cell" id="cell1"></div>
-        <div class="cell" id="cell2"></div>
-        <div class="cell" id="cell3"></div>
-        <div class="cell" id="cell4"></div>
-        <div class="cell" id="cell5"></div>
-        <div class="cell" id="cell6"></div>
-        <div class="cell" id="cell7"></div>
-        <div class="cell" id="cell8"></div>
-        <div class="cell" id="cell9"></div>
+                <div class="cell" id="cell1"></div>
+                <div class="cell" id="cell2"></div>
+                <div class="cell" id="cell3"></div>
+                <div class="cell" id="cell4"></div>
+                <div class="cell" id="cell5"></div>
+                <div class="cell" id="cell6"></div>
+                <div class="cell" id="cell7"></div>
+                <div class="cell" id="cell8"></div>
+                <div class="cell" id="cell9"></div>
 
-    </div>
+            </div>
 
 
-    <div class="container" id="other">
+            <div class="container" id="other">
 
-        <div id="buttons">
+                <div id="buttons">
 
-            <button type="button" class="btn" id="cpuStartBtn">You start</button>
+                    <button type="button" class="btn" id="cpuStartBtn">You start</button>
+                    <span id="outputText">Who starts?</span>
+                    <button type="button" class="btn" id="playerStartBtn">I'll start</button>
+                </div>
 
-            <button type="button" class="btn" id="playerStartBtn">I'll start</button>
+            </div>
         </div>
-
-        <div id="outputText">Who starts?</div>
-
     </div>
 
 

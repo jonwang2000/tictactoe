@@ -5,6 +5,11 @@
     margin: 0;
 }
 
+html,body {
+    height: 100%;
+    min-height: 100%;
+  }
+
 body {
     font-family: "Roboto", sans-serif;
     font-weight: 100;
@@ -12,7 +17,7 @@ body {
 
 h1 {
     text-align: center;
-    padding: 30px;
+    padding-bottom: 50px;
 }
 
 #tttparent {
@@ -32,6 +37,14 @@ h1 {
     -khtml-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 100%;
 }
 
 .cell {
@@ -88,6 +101,7 @@ h1 {
 .container {
     margin: auto;
     text-align: center;
+    margin-bottom: 100px;
 }
 
 #outputText {
