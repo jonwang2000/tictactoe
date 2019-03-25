@@ -28,7 +28,6 @@ var nineCell = document.getElementById('cell9');
 var cellBtns = document.getElementsByClassName('cell');
 
 // Buttons:
-var resetBtn = document.getElementById('resetBtn');
 var cpuBtn = document.getElementById('cpuStartBtn');
 var playerBtn = document.getElementById('playerStartBtn');
 

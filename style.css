@@ -5,10 +5,11 @@
     margin: 0;
 }
 
-html,body {
+html,
+body {
     height: 100%;
     min-height: 100%;
-  }
+}
 
 body {
     font-family: "Roboto", sans-serif;
@@ -93,18 +94,30 @@ h1 {
     margin: 5px;
 }
 
-#buttons {
-    margin: auto;
-    margin-top: 15px;
-}
 
 .container {
     margin: auto;
     text-align: center;
     margin-bottom: 100px;
+    display: grid;
+    grid-template: repeat(12, auto);
 }
 
 #outputText {
     margin-top: 30px;
     font-size: 3em;
+}
+
+#text {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    background-color: white;
+    display: inline;
+    margin: auto;
+    margin-top: 15px;
 }
