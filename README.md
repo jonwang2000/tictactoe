@@ -8,6 +8,7 @@ TODO:
 * Randomize first CPU move (starts in top left always atm)
 * Stylize more
 * Redo buttons
+* When someone (CPU) wins, change color of winning symbols
 
 COMPLETE:
 * Basic visual components
