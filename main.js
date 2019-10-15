@@ -59,7 +59,7 @@ var cpuVar = 'o';
 // Will return true or false based on if an update went through
 function updateCell(cell) {
 
-    if (cell.innerText   == '' && playableBool == true) {
+    if (cell.id !== '' && playableBool == true) {
 
         if ((turn % 2) == 1) {
             cell.innerHTML = '<i class="fas fa-times"></i>';
@@ -131,11 +131,11 @@ var clickCell = (clickObj) => {
     var x = false;
 
     if (clickableBool == true) {
-        outText.innerHTML = "Hm.";
         x = updateCell(clickObj.target);
     }
 
     if (x == true && counter < 9) {
+        outText.innerHTML = "Hm.";
         cpuTurn();
     }
 
